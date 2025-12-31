@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Scanner;
 
 
 @SpringBootApplication
@@ -19,6 +20,8 @@ public class PowersTrainsGymApplication implements CommandLineRunner {
     private static final Logger logger =
            LoggerFactory.getLogger(PowersTrainsGymApplication.class);
 
+    String nl = System.lineSeparator();
+
 	public static void main(String[] args){
 
         logger.info("Iniciando la aplicación");
@@ -29,8 +32,35 @@ public class PowersTrainsGymApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        logger.info("*** App PowerTrains Gym *** ");
 
+        powerTrainsApp();
+    }
 
+    private void powerTrainsApp(){
+
+        logger.info(nl + nl + "*** App PowerTrains Gym *** " + nl + nl);
+
+        var salir = false;
+        var consola = new Scanner(System.in);
+
+        while( !salir ){
+            var opcion = mostrarMenu(consola);
+            //salir = ejecutarOpciones(consola, opcion);
+            logger.info(nl);
+        }
+    }
+
+    private int mostrarMenu(Scanner consola){
+        logger.info("""
+                1. Listar Clientes
+                2. Buscar Cliente
+                3. Agregar Cliente
+                4. Modificar Cliente
+                5. Eliminar Cliente
+                6. Salir
+                Elige una opción: \s
+                """);
+
+        return Integer.parseInt(consola.nextLine());
     }
 }
