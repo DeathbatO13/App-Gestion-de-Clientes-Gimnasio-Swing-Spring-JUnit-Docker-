@@ -96,9 +96,18 @@ public class PowersTrainsGymApplication implements CommandLineRunner {
             case 5 ->{
 
                 logger.info("{}---Eliminar Cliente --- {}", nl, nl);
-                logger.info("");
+                logger.info("Inserte id de cliente a eliminar: ");
+                int idBuscado = Integer.parseInt(consola.nextLine());
+                Cliente del = clienteServicio.buscarClientePorId(idBuscado);
 
+                if(del != null){
+                    clienteServicio.eliminarCliente(del);
+                    logger.info("Cliente elimnado: " + del);
+                }else{
+                    logger.info("Cliente No Encontrado");
+                }
             }
+
 
             case 6 -> {
                 logger.info(nl + "Fin del programa");
