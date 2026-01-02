@@ -44,7 +44,7 @@ public class PowersTrainsGymApplication implements CommandLineRunner {
             case 1 -> {
                 logger.info(nl + " --- Listado de Clientes: --- "+ nl);
                 List<Cliente> clientes = clienteServicio.listarClientes();
-                clientes.forEach(cliente -> logger.info(cliente.toString()));
+                clientes.forEach(cliente -> logger.info(cliente.toString()+nl));
             }
 
             case 2 -> {
@@ -56,6 +56,53 @@ public class PowersTrainsGymApplication implements CommandLineRunner {
                     logger.info("Cliente encontrado:" + res + nl);
                 else
                     logger.info("Cliente no encontrado" + nl);
+            }
+
+            case 3 -> {
+
+                logger.info(nl + "--- Agregar Cliente ---"+nl);
+                Cliente add = new Cliente();
+                logger.info("Nombre del cliente: "); add.setNombre(String.valueOf(consola.nextLine()));
+                logger.info("Apellido del Cliente: "); add.setApellido(String.valueOf(consola.nextLine()));
+                logger.info("Membresia: "); add.setMembresia(Integer.parseInt(consola.nextLine()));
+                clienteServicio.guardarCliente(add);
+                logger.info("Cliente agregado: " + add + nl);
+
+            }
+
+            case 4 -> {
+
+                logger.info(nl + "--- Modificar Cliente ---"+nl);
+                logger.info("Inserte id de cliente a modificar: ");
+                var idBuscado = Integer.parseInt(consola.nextLine());
+                Cliente mod = clienteServicio.buscarClientePorId(idBuscado);
+
+                if(mod != null) {
+
+                    logger.info("Nombre: ");
+                    mod.setNombre(String.valueOf(consola.nextLine()));
+                    logger.info("Apellido: ");
+                    mod.setApellido(String.valueOf(consola.nextLine()));
+                    logger.info("Membresia nueva: ");
+                    mod.setMembresia(Integer.parseInt(consola.nextLine()));
+                    clienteServicio.guardarCliente(mod);
+                    logger.info(nl + "Cliente modificado: " + mod + nl+nl);
+
+                }else{
+                    logger.info("Cliente No encontrado");
+                }
+            }
+
+            case 5 ->{
+
+                logger.info("{}---Eliminar Cliente --- {}", nl, nl);
+                logger.info("");
+
+            }
+
+            case 6 -> {
+                logger.info(nl + "Fin del programa");
+                salir = true;
             }
         }
         return salir;
