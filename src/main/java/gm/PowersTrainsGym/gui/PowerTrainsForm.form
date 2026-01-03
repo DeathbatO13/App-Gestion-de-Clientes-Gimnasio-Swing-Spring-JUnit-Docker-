@@ -13,7 +13,8 @@
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <font name="JetBrains Mono ExtraBold" size="26" style="1"/>
+          <font name="Unispace" size="28" style="1"/>
+          <foreground color="-4229851"/>
           <text value="PowerTrains (GYM)"/>
         </properties>
       </component>

@@ -1,6 +1,7 @@
 package gm.PowersTrainsGym;
 
 
+import com.formdev.flatlaf.FlatDarculaLaf;
 import gm.PowersTrainsGym.gui.PowerTrainsForm;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,8 @@ import javax.swing.*;
 public class PowerTrainsSwing {
 
     public static void main(String[] args) {
-
+        //Configurar modo Oscuro
+        FlatDarculaLaf.setup();
         //Instancia la fabrica de Spring
         ConfigurableApplicationContext contextToSpring =
                 new SpringApplicationBuilder(PowerTrainsSwing.class).headless(false)
