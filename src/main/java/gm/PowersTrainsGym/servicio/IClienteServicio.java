@@ -4,8 +4,6 @@ import gm.PowersTrainsGym.modelo.Cliente;
 
 import java.util.List;
 
-
-
 public interface IClienteServicio {
 
     public List<Cliente> listarClientes();
