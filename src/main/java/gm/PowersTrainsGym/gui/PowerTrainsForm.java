@@ -11,6 +11,7 @@ import javax.swing.*;
 public class PowerTrainsForm extends JFrame{
 
     private JPanel panelPrincipal;
+    private JTable clientesTabla;
 
     IClienteServicio clienteServicio;
 
