@@ -33,10 +33,26 @@ public class PowerTrainsForm extends JFrame{
 
 
     private void createUIComponents() {
-        // TODO: place custom component creation code here
+
         this.tablaModeloClientes = new DefaultTableModel(0, 4);
         String[] cabeceros = {"Id", "Nombre", "Apellido", "Columna"};
         this.tablaModeloClientes.setColumnIdentifiers(cabeceros);
         this.clientesTabla = new JTable(tablaModeloClientes);
+        //Cargar listado clientes
+        listarClientes();
+    }
+
+    private void listarClientes(){
+        this.tablaModeloClientes.setRowCount(0);
+        var clientes = this.clienteServicio.listarClientes();
+        clientes.forEach(cliente ->{
+            Object[] renglonCliente = {
+                    cliente.getId(),
+                    cliente.getNombre(),
+                    cliente.getApellido(),
+                    cliente.getMembresia()
+            };
+            this.tablaModeloClientes.addRow(renglonCliente);
+        });
     }
 }
