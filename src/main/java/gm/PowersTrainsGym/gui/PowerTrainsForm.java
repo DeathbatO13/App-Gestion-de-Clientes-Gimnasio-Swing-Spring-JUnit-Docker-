@@ -13,6 +13,12 @@ public class PowerTrainsForm extends JFrame{
 
     private JPanel panelPrincipal;
     private JTable clientesTabla;
+    private JTextField textField1;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JButton guardarButton;
+    private JButton eliminarButton;
+    private JButton limpiarButton;
 
     IClienteServicio clienteServicio;
 
