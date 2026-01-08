@@ -1,5 +1,6 @@
 package gm.PowersTrainsGym.gui;
 
+import gm.PowersTrainsGym.modelo.Cliente;
 import gm.PowersTrainsGym.servicio.ClienteServicio;
 import gm.PowersTrainsGym.servicio.IClienteServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,9 @@ public class PowerTrainsForm extends JFrame{
 
     private JPanel panelPrincipal;
     private JTable clientesTabla;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField nombreTextField;
+    private JTextField apellidoTextField;
+    private JTextField membresiaTextField;
     private JButton guardarButton;
     private JButton eliminarButton;
     private JButton limpiarButton;
@@ -28,6 +29,7 @@ public class PowerTrainsForm extends JFrame{
     public PowerTrainsForm(ClienteServicio clienteServicio){
         this.clienteServicio = clienteServicio;
         iniciarForma();
+        guardarButton.addActionListener(e -> guardarCliente());
     }
 
     private void iniciarForma(){
@@ -36,7 +38,6 @@ public class PowerTrainsForm extends JFrame{
         setSize(900, 700);
         setLocationRelativeTo(null);
     }
-
 
     private void createUIComponents() {
 
@@ -60,5 +61,40 @@ public class PowerTrainsForm extends JFrame{
             };
             this.tablaModeloClientes.addRow(renglonCliente);
         });
+    }
+
+    private void guardarCliente(){
+        if(nombreTextField.getText().isEmpty()){
+            mostrarMensaje("Proporciona un nombre");
+            nombreTextField.requestFocusInWindow();
+            return;
+        }
+        if(membresiaTextField.getText().isEmpty()){
+            mostrarMensaje("Proporciona una membresia");
+            membresiaTextField.requestFocusInWindow();
+            return;
+        }
+
+        var cliente = new Cliente();
+        cliente.setNombre(nombreTextField.getText());
+        cliente.setApellido(apellidoTextField.getText());
+        cliente.setMembresia(Integer.parseInt(membresiaTextField.getText()));
+
+        this.clienteServicio.guardarCliente(cliente);
+
+        limpiarFormulario();
+
+        listarClientes();
+
+    }
+
+    private void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+
+    private void limpiarFormulario(){
+        nombreTextField.setText("");
+        apellidoTextField.setText("");
+        membresiaTextField.setText("");
     }
 }
