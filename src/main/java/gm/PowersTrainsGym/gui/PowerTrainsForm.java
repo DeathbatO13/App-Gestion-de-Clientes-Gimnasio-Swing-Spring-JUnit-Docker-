@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -30,9 +32,12 @@ public class PowerTrainsForm extends JFrame{
 
     @Autowired
     public PowerTrainsForm(ClienteServicio clienteServicio){
+
         this.clienteServicio = clienteServicio;
         iniciarForma();
+
         guardarButton.addActionListener(e -> guardarCliente());
+
         clientesTabla.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -40,6 +45,8 @@ public class PowerTrainsForm extends JFrame{
                 cargarClienteSelect();
             }
         });
+
+        eliminarButton.addActionListener(e -> eliminarCliente());
     }
 
     private void iniciarForma(){
@@ -105,12 +112,32 @@ public class PowerTrainsForm extends JFrame{
 
     }
 
+    private void eliminarCliente(){
+        var row = clientesTabla.getSelectedRow();
+
+        if(row != -1){
+            var idClienteS = clientesTabla.getModel().getValueAt(row, 0).toString();
+            var idCliente = Integer.parseInt(idClienteS);
+            var cliente = clienteServicio.buscarClientePorId(idCliente);
+            this.clienteServicio.eliminarCliente(cliente);
+
+            mostrarMensaje("Cliente con id: " + idCliente +  " Eliminado");
+
+            limpiarFormulario();
+            listarClientes();
+        }
+        else
+            mostrarMensaje("Debe seleccionar un cliente");
+    }
+
     private void cargarClienteSelect(){
         var row = clientesTabla.getSelectedRow();
         //-1 cuando no selecciona nada
         if(row != -1){
+
             var id = clientesTabla.getModel().getValueAt(row, 0).toString();
             this.idCliente = Integer.parseInt(id);
+
             var cliente = this.clienteServicio.buscarClientePorId(idCliente);
             this.nombreTextField.setText(cliente.getNombre());
             this.apellidoTextField.setText(cliente.getApellido());
@@ -119,11 +146,13 @@ public class PowerTrainsForm extends JFrame{
     }
 
     private void limpiarFormulario(){
+
         this.idCliente = null;
         nombreTextField.setText("");
         apellidoTextField.setText("");
         membresiaTextField.setText("");
         this.clientesTabla.getSelectionModel().clearSelection();
+
     }
 
     private void mostrarMensaje(String mensaje){
