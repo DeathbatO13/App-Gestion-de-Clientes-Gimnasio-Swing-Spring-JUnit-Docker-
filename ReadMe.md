@@ -90,13 +90,13 @@ Permite registrar, visualizar y eliminar clientes mediante una interfaz gráfica
     │   │   │   └── config/      # Configuración Spring
     │   │   └── resources/
     │   └── test/
-    │       └── java/            # Pruebas unitarias (en progreso)
+    │       └── java/            # Pruebas unitarias
     │
     ├── img/
     │   └── app.png
     │
     ├── README.md
-    └── (Dockerfile - pendiente)
+    └── Dockerfile
     
 
 
