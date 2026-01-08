@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 @Component
 public class PowerTrainsForm extends JFrame{
@@ -20,6 +22,7 @@ public class PowerTrainsForm extends JFrame{
     private JButton guardarButton;
     private JButton eliminarButton;
     private JButton limpiarButton;
+    private Integer idCliente;
 
     IClienteServicio clienteServicio;
 
@@ -30,6 +33,13 @@ public class PowerTrainsForm extends JFrame{
         this.clienteServicio = clienteServicio;
         iniciarForma();
         guardarButton.addActionListener(e -> guardarCliente());
+        clientesTabla.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                cargarClienteSelect();
+            }
+        });
     }
 
     private void iniciarForma(){
@@ -88,13 +98,26 @@ public class PowerTrainsForm extends JFrame{
 
     }
 
-    private void mostrarMensaje(String mensaje){
-        JOptionPane.showMessageDialog(this, mensaje);
+    private void cargarClienteSelect(){
+        var row = clientesTabla.getSelectedRow();
+        //-1 cuando no selecciona nada
+        if(row != -1){
+            var id = clientesTabla.getModel().getValueAt(row, 0).toString();
+            this.idCliente = Integer.parseInt(id);
+            var cliente = this.clienteServicio.buscarClientePorId(idCliente);
+            this.nombreTextField.setText(cliente.getNombre());
+            this.apellidoTextField.setText(cliente.getApellido());
+            this.membresiaTextField.setText(cliente.getMembresia().toString());
+        }
     }
 
     private void limpiarFormulario(){
         nombreTextField.setText("");
         apellidoTextField.setText("");
         membresiaTextField.setText("");
+    }
+
+    private void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
     }
 }
