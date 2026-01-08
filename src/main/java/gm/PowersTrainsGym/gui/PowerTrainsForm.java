@@ -86,11 +86,18 @@ public class PowerTrainsForm extends JFrame{
         }
 
         var cliente = new Cliente();
+
+        cliente.setId(this.idCliente);
         cliente.setNombre(nombreTextField.getText());
         cliente.setApellido(apellidoTextField.getText());
         cliente.setMembresia(Integer.parseInt(membresiaTextField.getText()));
 
         this.clienteServicio.guardarCliente(cliente);
+
+        if(this.idCliente != null)
+            mostrarMensaje("Cliente Actualizado");
+        else
+            mostrarMensaje("Cliente Agregado");
 
         limpiarFormulario();
 
@@ -112,9 +119,11 @@ public class PowerTrainsForm extends JFrame{
     }
 
     private void limpiarFormulario(){
+        this.idCliente = null;
         nombreTextField.setText("");
         apellidoTextField.setText("");
         membresiaTextField.setText("");
+        this.clientesTabla.getSelectionModel().clearSelection();
     }
 
     private void mostrarMensaje(String mensaje){
